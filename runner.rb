@@ -21,3 +21,4 @@ if solved?(solved_board)
 else
   puts "The board wasn't solved :("
 end
+
