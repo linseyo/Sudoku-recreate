@@ -29,31 +29,40 @@ def cell_solved?(cell)
 end
 
 #need to run each_with_index when this is called
-#row_index=4 col_index=3
+#ref cell is the top left cell in box
 def define_coordinates(row_index, col_index)
-  cell_1_row_index = (row_index / 3) * 3
-  cell_1_col_index = (col_index / 3) * 3
-  i = 0
-  coordinate_array = []
-  while i < 3
-    row_coord = cell_1_row_index + i
+  ref_row_index = (row_index / 3) * 3
+  ref_col_index = (col_index / 3) * 3
+  box_coords = []
+  3.times do |row_adjust|
+    row_coord = ref_row_index + row_adjust
     j = 0
-    while j < 3
+    3.times do |col_adjust|
       coordinate = []
-      col_coord = cell_1_col_index + j
-      coordinate << row_coord
-      coordinate << col_coord
-      coordinate_array << coordinate
-      j += 1
+      col_coord = ref_col_index + col_adjust
+      coordinate << row_coord << col_coord
+      box_coords << coordinate
     end
-    i += 1
   end
-  coordinate_array
+  box_coords
 end
 
 def update_board(coordinate_array, board)
   coordinate_array.each do |coord|
-     p board[coord[0]][coord[1]]
+    test_value = board[coord[0]][coord[1]]
+    if cell_solved?(test_value)
+      found_value = test_value
+      eliminate_poss_value(coordinate_array, board, found_value)
+    end
+  end
+  board
+end
+def eliminate_poss_value(coordinate_array, board, found_value)
+  coordinate_array.each do |coord|
+    test_value = board[coord[0]][coord[1]]
+    if !cell_solved?(test_value)
+      test_value.gsub!(/#{Regexp.quote(found_value)}/, "")
+    end
   end
 end
 
