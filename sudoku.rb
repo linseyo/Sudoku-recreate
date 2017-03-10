@@ -4,6 +4,73 @@
 # your solver has tried to solve it.
 # How you represent your board is up to you!
 def solve(board_string)
+  sudoku_board = splitter(board_string)
+  solved?(sudoku_board)
+  pretty_board(board_string)
+end
+
+# Returns a boolean indicating whether
+# or not the provided board is solved.
+# The input board will be in whatever
+# form `solve` returns.
+def solved?(board)
+    board.each do |row|
+    puts row_check(row)
+  end
+  board.transpose.each do |row|
+    puts colum_check(row)
+  end
+end
+
+def row_check(row)
+  array_to_string = row.sort.map{|cell| cell}
+  array_to_string = array_to_string.join
+  array_to_string.include?(numbers)
+end
+
+def colum_check(row)
+  row_check(row)
+end
+
+def numbers
+  "123456789"
+end
+
+# Takes in a board in some form and
+# returns a _String_ that's well formatted
+# for output to the screen. No `puts` here!
+# The input board will be in whatever
+# form `solve` returns.
+def pretty_board(board)
+  pretty_board = ""
+  counter = 0
+  box_counter = 0
+  row_counter = 0
+    board.split("").each_with_index do |cell,position|
+      if counter == 8
+        pretty_board += " #{cell} \n"
+        counter = 0
+        box_counter = 0
+        row_counter += 1
+        next_element = board[position+1]
+        if row_counter == 3 && next_element != nil
+          pretty_board += "="* 36 + "\n"
+          row_counter = 0
+        end
+      elsif box_counter == 2
+        pretty_board += " #{cell} ||"
+        box_counter = 0
+        counter += 1
+      else
+        pretty_board += " #{cell} |"
+        counter += 1
+        box_counter +=1
+      end
+    end
+    pretty_board
+end
+
+def splitter(board_string)
   box = []
   if board_string.length != 81
     return "📝 Need more information!!!"
@@ -37,22 +104,9 @@ def solve(board_string)
   end
 end
 
-# Returns a boolean indicating whether
-# or not the provided board is solved.
-# The input board will be in whatever
-# form `solve` returns.
-def solved?(board)
-end
-
-# Takes in a board in some form and
-# returns a _String_ that's well formatted
-# for output to the screen. No `puts` here!
-# The input board will be in whatever
-# form `solve` returns.
-def pretty_board(board)
-end
 
 test = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
 test_array = solve(test)
-p test_array
+puts test_array
+
 
