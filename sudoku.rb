@@ -21,3 +21,43 @@ end
 def pretty_board(board)
 end
 #
+board[y][x]
+
+
+# Narrows possibilities of a cell by checking horizontal, vertical,
+      # and box values.
+def narrow_possibilities(board, origin_y, origin_x)
+  check_row(board, origin_y, origin_x)
+  flipped_board = flip_game_board()
+  check_row(flipped_board, origin_y, origin_x)
+
+end
+
+
+# Deletes possibilities from cell if a number is in the same row
+def check_row(board, origin_y, origin_x )
+  # Origin x and y correspond to cell that we are searching from
+  # Cycling through each cell in given row
+  board[origin_y].each_index do |x|
+    # If cell has one possibility...
+    if board[y][x].length == 1
+      # Delete this possibility from origin
+      board[origin_y][origin_x].delete!(board[y][x])
+    end
+  end
+end
+
+# Flips the board so rows are now columns...used to check columns.
+def flip_board(board)
+  board.transpose
+end
+
+
+
+
+
+
+
+
+
+
