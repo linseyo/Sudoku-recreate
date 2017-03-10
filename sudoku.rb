@@ -6,9 +6,10 @@
 
 # INPUT: String
 # OUTPUT: String
-def solve(board_string)
+mega_array = []
+def solve(mega_array, board_string)
   separated_board_string = board_string.split('')
-  mega_array = []
+  # mega_array = []
   # counter = 0
   #   while counter < 82
   #     separated_board_string.each_with_index do |number, index|
@@ -48,7 +49,7 @@ end
 def pretty_board(board)
 end
 
-p solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
+solve(mega_array, "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
 
 
 def method ()
@@ -81,16 +82,77 @@ def vertical(cposition)
   mega_array.transpose[cposition]
 end
 
-def box_check(cell)
-
+def box(mega_array, rposition, cposition)
+ box = []
+  case rposition
+  when 0..2
+    case cposition
+    when 0..2
+      (0..2).each do |r|
+        (0..2).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    when 3..5
+      (0..2).each do |r|
+        (3..5).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    when 6..8
+      (0..2).each do |r|
+        (6..8).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    end
+  when 3..5
+    case cposition
+    when 0..2
+      (3..5).each do |r|
+        (0..2).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    when 3..5
+      (3..5).each do |r|
+        (3..5).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    when 6..8
+      (3..5).each do |r|
+        (6..8).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    end
+  when 6..8
+    case cposition
+    when 0..2
+      (6..8).each do |r|
+        (0..2).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    when 3..5
+      (6..8).each do |r|
+        (3..5).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    when 6..8
+      (6..8).each do |r|
+        (6..8).each do |c|
+          box << mega_array[r][c]
+        end
+      end
+    end
+  end
+  box
 end
 
-mega_array = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7,8, 9]
-]
-mega_array[0][0] == [row1]
+p box(mega_array, 3,6)
 
 # pseudocode
 # check horizontally, put the possible in the satchel
