@@ -22,16 +22,43 @@ def convert_dash(board)
   end
 end
 
-# def row_conflict(format_board)
-#   known_row_digits = []
-#   format_board.each do |row|
-#     row.each do |cell|
-#       if cell.length == 1
-#         known_row_digits << cell
-#       end
-#     end
-#   end
-# end
+
+def cell_solved?(cell)
+  return true if cell.length == 1
+  false
+end
+
+#need to run each_with_index when this is called
+#row_index=4 col_index=3
+def define_coordinates(row_index, col_index)
+  cell_1_row_index = (row_index / 3) * 3
+  cell_1_col_index = (col_index / 3) * 3
+  i = 0
+  coordinate_array = []
+  while i < 3
+    row_coord = cell_1_row_index + i
+    j = 0
+    while j < 3
+      coordinate = []
+      col_coord = cell_1_col_index + j
+      coordinate << row_coord
+      coordinate << col_coord
+      coordinate_array << coordinate
+      j += 1
+    end
+    i += 1
+  end
+  coordinate_array
+end
+
+def update_board(coordinate_array, board)
+  coordinate_array.each do |coord|
+     p board[coord[0]][coord[1]]
+  end
+end
+
+
+
 
 def solved_cells(row)
   row.each |cell|

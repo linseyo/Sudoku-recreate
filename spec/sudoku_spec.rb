@@ -46,4 +46,12 @@ describe "Sudoku" do
     ]
   end
 
+  it 'defines coordinate array correctly' do
+    expect(define_coordinates(8, 4)).to eq [[6, 3], [6, 4], [6, 5], [7, 3], [7, 4], [7, 5], [8, 3], [8, 4], [8, 5]]
+  end
+
+  it 'pulls correct cells from coordinate_array' do
+    expect(update_board(define_coordinates(8, 4), format_board(test_board))).to eq
+  end
+
 end
