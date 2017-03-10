@@ -4,6 +4,15 @@
 # your solver has tried to solve it.
 # How you represent your board is up to you!
 def solve(board_string)
+  box = []
+  if board_string.length != 81
+    "📝 Need more information!!!"
+  else
+    for i in 0..board_string.length-1
+    end
+    box
+  end
+
 end
 
 # Returns a boolean indicating whether
