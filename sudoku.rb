@@ -22,22 +22,25 @@ def convert_dash(board)
   end
 end
 
-# def row_conflict(format_board)
-#   known_row_digits = []
-#   format_board.each do |row|
-#     row.each do |cell|
-#       if cell.length == 1
-#         known_row_digits << cell
-#       end
-#     end
-#   end
-# end
-
 def solved_cells(row)
-  row.each |cell|
-    if cell.length == 1
-
+  solved_cells_in_row = ""
+  row.each do |cell|
+    if cell_solved?(cell)
+      solved_cells_in_row += cell
     end
+  end
+end
+
+def cell_solved?(cell)
+  return true if cell.length == 1
+  false
+end
+
+def reduce_possibilities(row)
+  already_solved = solved_cells(row)
+  row.each do |cell|
+    cell.include?(already_solved)
+  end
 end
 
 # Takes a board as a string in the format
