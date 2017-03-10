@@ -39,18 +39,22 @@ end
 
 def reduce_possibilities(row)
   already_solved = solved_cells(row)
-
-  row.each do |cell| #for each cell in the row do:
-    if cell_solved?(cell) == false #if it's unsolved:
-      already_solved.each do |num_to_remove|  #for 1,5,8,2 do:
-        cell.gsub!(/#{Regexp.quote(num_to_remove)}/, "") #this deletes the entire cell
-        p {Regexp.quote(num_to_remove)}
+  row.each do |cell|
+    if cell_solved?(cell) == false
+      already_solved.each do |num_to_remove|
+        cell.gsub!(/#{Regexp.quote(num_to_remove)}/, "")
       end
       cell
     end
   end
 end
 
+def reduce_possibilities_rows(board)
+  board.each do |row|
+    reduce_possibilities(row)
+  end
+  board
+end
 # Takes a board as a string in the format
 # you see in the puzzle file. Returns
 # something representing a board after
@@ -73,3 +77,6 @@ end
 # form `solve` returns.
 def pretty_board(board)
 end
+
+# test_board = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
+# reduce_possibilities_rows(format_board(test_board))
