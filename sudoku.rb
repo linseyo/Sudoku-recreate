@@ -23,12 +23,13 @@ def convert_dash(board)
 end
 
 def solved_cells(row)
-  solved_cells_in_row = ""
+  solved_cells_in_row = []
   row.each do |cell|
     if cell_solved?(cell)
-      solved_cells_in_row += cell
+      solved_cells_in_row << cell
     end
   end
+  solved_cells_in_row
 end
 
 def cell_solved?(cell)
@@ -38,8 +39,15 @@ end
 
 def reduce_possibilities(row)
   already_solved = solved_cells(row)
-  row.each do |cell|
-    cell.include?(already_solved)
+
+  row.each do |cell| #for each cell in the row do:
+    if cell_solved?(cell) == false #if it's unsolved:
+      already_solved.each do |num_to_remove|  #for 1,5,8,2 do:
+        cell.gsub!(/#{Regexp.quote(num_to_remove)}/, "") #this deletes the entire cell
+        p {Regexp.quote(num_to_remove)}
+      end
+      cell
+    end
   end
 end
 
