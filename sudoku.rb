@@ -76,16 +76,32 @@ def eliminate_poss_value(coordinate_array, board, found_value)
   end
 end
 
-def exactly_one_instance(board)
-  cell_options = "1234"
+# def exactly_one_instance(board)
+#   cell_options = "1234"
+#   board.each do |row|
+#     cell_options.each_char do |number|
+#       if /#{number}[^#{number}]+$/ =~ row.to_s #if this row has exactly one instance of this number"
+#         puts "#{number} is the only one of itself!"
+#       end
+#     end
+#   end
+# end
+
+def exactly_one?(board)
+  delete_others_in_array = ""
   board.each do |row|
-    cell_options.each_char do |number|
-      if /#{number}[^#{number}]+$/ =~ row.to_s #if this row has exactly one instance of this number"
-        puts "#{number} is the only one of itself!"
-      end
+    single_string = row.join('')
+  end
+  cell_options = "123456789"
+  cell_options.each_char do |number|
+    how_many_array = single_string.scan(number).length
+    p how many_array
+    if how_many_array > 1
+      delete_others_in_array += number
     end
   end
 end
+
 
 def solved_cells(row)
   solved_cells_in_row = []
