@@ -5,8 +5,33 @@
 # How you represent your board is up to you!
 def solve(board_string)
   sudoku_board = splitter(board_string)
+  sudoku_board_hashes = hash_creater(sudoku_board)
+  puts "IiiiiiiiiiiiI"
+  puts sudoku_board_hashes
   solved?(sudoku_board)
   pretty_board(board_string)
+end
+
+def hash_creater(board)
+  counter = 0
+  arrary_to_return = []
+  9.times {
+    box_name ="box #{counter}"
+     box_name = {
+      "0" => "-",
+      "1" => "-",
+      "2" => "-",
+      "3" => "-",
+      "4" => "-",
+      "5" => "-",
+      "6" => "-",
+      "7" => "-",
+      "8" => "-"
+    }
+    arrary_to_return.push(box_name)
+  }
+  return arrary_to_return
+
 end
 
 # Returns a boolean indicating whether
@@ -33,7 +58,7 @@ def colum_check(row)
 end
 
 def numbers
-  "123456789"
+ "123456789"
 end
 
 # Takes in a board in some form and
