@@ -22,11 +22,12 @@ def solve(board_string)
   board_array
 
 #   temp_array = board_array.join
-# 81.times do
-   sudoku_solver(board_array)
-# end
-  p board_array
+  while board_array.each {|item| item != "-"}
+    sudoku_solver(board_array)
+  end
+board_array
 end
+
 # Returns a boolean indicating whether
 # or not the provided board is solved.
 # The input board will be in whatever
@@ -46,7 +47,7 @@ end
 # form `solve` returns.
 def pretty_board(board)
   board.each do |num|
-    puts num.each { |chars| chars}.join(" ")
+    num.each { |chars| chars}.join(" ")
   end
 
 end
@@ -62,6 +63,7 @@ def sudoku_solver(mega_array)
       end
     end
   end
+  mega_array
 end
 
 def check_arrays(mega_array, cell, rposition, cposition)
@@ -80,8 +82,6 @@ satchel = []
       end
      end
 
-
-
     satchel.each do |next_digit|
      if box(mega_array, rposition, cposition).include?(next_digit)
        satchel.delete(next_digit)
@@ -93,14 +93,16 @@ satchel = []
     else
       return "-"
     end
-end
+  end
 end
 # end
 # array.each {|value| (1..9).each do
 # value == number}
 
 def dash_finder(cell)
-  cell.include?("-")
+  if cell == "-"
+  return true
+  end
 end
 
 def horizontal(mega_array, rposition)
@@ -184,7 +186,7 @@ end
 
 # p box(mega_array, 3,6)
 
-sudoku_solver(solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
+# p sudoku_solver(solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
 
 
 # pseudocode
