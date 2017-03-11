@@ -155,7 +155,7 @@ def solve(board_string)
   board_string = empty_puzzle(board_string)
   formatted_board = format_board(board_string)
   until solved?(formatted_board)
-    p cell_checker(reduce_possibilities_rotation(formatted_board))
+    cell_checker(reduce_possibilities_rotation(formatted_board))
   end
   formatted_board
 end
@@ -174,5 +174,15 @@ end
 # for output to the screen. No `puts` here!
 # The input board will be in whatever
 # form `solve` returns.
-def pretty_board(board)
+
+def prettys_rows(row)
+  row.join("  ")
+end
+
+def pretty_board(board) # output is nice string to be putsed in runner
+  pretty_print = ""
+  board.each do |row|
+    pretty_print += (prettys_rows(row) + "\n")
+  end
+  pretty_print
 end
