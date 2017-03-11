@@ -22,10 +22,10 @@ def solve(board_string)
   board_array
 
 #   temp_array = board_array.join
-# 81.times do
-   sudoku_solver(board_array)
-# end
-  p board_array
+    81.times do
+       sudoku_solver(board_array)
+    end
+p board_array
 end
 # Returns a boolean indicating whether
 # or not the provided board is solved.
@@ -80,8 +80,6 @@ satchel = []
       end
      end
 
-
-
     satchel.each do |next_digit|
      if box(mega_array, rposition, cposition).include?(next_digit)
        satchel.delete(next_digit)
@@ -100,7 +98,9 @@ end
 # value == number}
 
 def dash_finder(cell)
-  cell.include?("-")
+  if cell == "-"
+  return true
+end
 end
 
 def horizontal(mega_array, rposition)
