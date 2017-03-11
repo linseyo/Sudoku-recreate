@@ -69,12 +69,13 @@ def eliminate_poss_value(coordinate_array, board, found_value)
 end
 
 def solved_cells(row)
-  solved_cells_in_row = ""
+  solved_cells_in_row = []
   row.each do |cell|
     if cell_solved?(cell)
-      solved_cells_in_row += cell
+      solved_cells_in_row << cell
     end
   end
+  solved_cells_in_row
 end
 
 def cell_solved?(cell)
@@ -82,11 +83,47 @@ def cell_solved?(cell)
   false
 end
 
+def row_cell_solved?(row)
+
+end
+
+# Reduce possibilities:
 def reduce_possibilities(row)
   already_solved = solved_cells(row)
   row.each do |cell|
-    cell.include?(already_solved)
+    if cell_solved?(cell) == false
+      already_solved.each do |num_to_remove|
+        cell.gsub!(/#{Regexp.quote(num_to_remove)}/, "")
+      end
+      cell
+    end
   end
+end
+
+def reduce_possibilities_rows(board)
+  board.each do |row|
+    reduce_possibilities(row)
+  end
+  board
+end
+
+def reduce_possibilities_cols(board)
+  rotated_board = board.transpose
+  reduce_possibilities_rows(rotated_board)
+end
+
+def reduce_possibilities_rotation(board)
+  unrotated_board = reduce_possibilities_rows(board)
+  rotated = reduce_possibilities_cols(unrotated_board)
+  i = 0
+  while i < 100
+    rotated.replace(reduce_possibilities_cols(rotated))
+    p rotated
+    puts
+    puts
+    i += 1
+  end
+  rotated
 end
 
 # Takes a board as a string in the format
@@ -111,3 +148,15 @@ end
 # form `solve` returns.
 def pretty_board(board)
 end
+
+ test_board = "-8--2-----4-5--32--2-3-9-466---9---4---64-5-1134-5-7--36---4--24-723-6-----7--45-"
+
+ solvable_board = format_board(test_board)
+ p solvable_board
+puts "---------------"
+puts
+p test_solution = reduce_possibilities_rotation(solvable_board)
+ # solved_rows = reduce_possibilities_rows(solvable_board)
+ # p solved_rows
+ # x_and_y_solved_puzzle = reduce_possibilities_cols(solved_rows)
+ # p x_and_y_solved_puzzle
