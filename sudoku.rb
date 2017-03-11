@@ -22,10 +22,10 @@ def solve(board_string)
   board_array
 
 #   temp_array = board_array.join
-  while board_array.each {|item| item != "-"}
-    sudoku_solver(board_array)
-  end
-board_array
+#  while board_array.include?("-")
+  50.times { sudoku_solver(board_array) }
+  # end
+  board_array
 end
 
 # Returns a boolean indicating whether
@@ -46,20 +46,30 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def pretty_board(board)
-  board.each do |num|
-    num.each { |chars| chars}.join(" ")
-  end
-
+  #board.each do |num|
+  #  num.each { |chars| chars}.join(" ")
+    #end
+  display_board = board.join("|")
+  puts display_board[0..17]
+  puts display_board[18..35]
+  puts display_board[36..53]
+  puts display_board[54..71]
+  puts display_board[72..89]
+  puts display_board[90..107]
+  puts display_board[108..125]
+  puts display_board[126..143]
+  puts display_board[144..161] + "|"
 end
 
 def sudoku_solver(mega_array)
   mega_array.each_with_index do |row, rposition|
     row.each_with_index do |cell, cposition|
       if dash_finder(cell)
-        mega_array[rposition][cposition] = check_arrays(mega_array, cell, rposition, cposition)
-        # then do the check on the row
-        # do the column check
-        # do the box check
+        # mega_array[rposition][cposition] =
+        stored_value = check_arrays(mega_array, cell, rposition, cposition)
+        if stored_value != "*"
+          mega_array[rposition][cposition] = stored_value
+        end
       end
     end
   end
@@ -75,25 +85,22 @@ satchel = []
     end
   end
 
-  until satchel.length == 1
-     satchel.each do |satchel_digit|
+    numbers.each do |satchel_digit|
        if vertical(mega_array, cposition).include?(satchel_digit)
         satchel.delete(satchel_digit)
       end
      end
 
-    satchel.each do |next_digit|
+    numbers.each do |next_digit|
      if box(mega_array, rposition, cposition).include?(next_digit)
        satchel.delete(next_digit)
      end
    end
-
     if satchel.length == 1
       return satchel[0]
     else
-      return "-"
+      return "*"
     end
-  end
 end
 # end
 # array.each {|value| (1..9).each do
