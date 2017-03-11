@@ -22,16 +22,55 @@ def convert_dash(board)
   end
 end
 
-# def row_conflict(format_board)
-#   known_row_digits = []
-#   format_board.each do |row|
-#     row.each do |cell|
-#       if cell.length == 1
-#         known_row_digits << cell
-#       end
-#     end
-#   end
-# end
+
+def cell_solved?(cell)
+  return true if cell.length == 1
+  false
+end
+
+#need to run each_with_index when this is called
+def define_box_coords(row_index, col_index)
+  ref_row_index = (define_ref_index(row_index))
+  ref_col_index = (define_ref_index(col_index))
+  box_coords = []
+  3.times do |row_adjust|
+    row_coord = ref_row_index + row_adjust
+    3.times do |col_adjust|
+      cell_coord = []
+      col_coord = ref_col_index + col_adjust
+      cell_coord << row_coord << col_coord
+      box_coords << cell_coord
+    end
+  end
+  box_coords
+end
+
+# ref_index refers index of top left cell in box
+def define_ref_index(input_index)
+  ref_index = ( input_index / 3) * 3
+end
+
+def update_board(coordinate_array, board)
+  coordinate_array.each do |coord|
+    test_value = board[coord[0]][coord[1]]
+    if cell_solved?(test_value)
+      found_value = test_value
+      eliminate_poss_value(coordinate_array, board, found_value)
+    end
+  end
+  board
+end
+def eliminate_poss_value(coordinate_array, board, found_value)
+  coordinate_array.each do |coord|
+    test_value = board[coord[0]][coord[1]]
+    if !cell_solved?(test_value)
+      test_value.gsub!(/#{Regexp.quote(found_value)}/, "")
+    end
+  end
+end
+
+
+
 
 def solved_cells(row)
   row.each |cell|
