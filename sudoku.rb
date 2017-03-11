@@ -4,13 +4,46 @@
 # your solver has tried to solve it.
 # How you represent your board is up to you!
 def solve(board_string)
+  game_board = populate_board(board_string)
+  range = (0..8)
+  count = 0
+  loop do
+    check = true
+    range.each do |y|
+      range.each do |x|
+        narrow_possibilities(game_board, y, x)
+      end
+      if game_board[y].any? {|cell| cell.length > 1}
+          check = false
+      else
+        nil
+      end
+    end
+    break if check == true
+    count += 1
+    break if count > 50
+  end
+  game_board
 end
 
 # Returns a boolean indicating whether
 # or not the provided board is solved.
 # The input board will be in whatever
 # form `solve` returns.
-def solved?(board)
+def solved?(game_board)
+  range = (0..8)
+  check = true
+  range.each do |y|
+    range.each do |x|
+      narrow_possibilities(game_board, y, x)
+    end
+    if game_board[y].any? {|cell| cell.length > 1}
+        check = false
+    else
+      nil
+    end
+  end
+  check
 end
 
 # Takes in a board in some form and
@@ -20,8 +53,6 @@ end
 # form `solve` returns.
 def pretty_board(board)
 end
-
-
 
 # Takes in a string (81 characters) with dashes and numbers and converts into a 9 x 9 game board
 # Empty cells are filled are filled with possibilities
@@ -53,7 +84,6 @@ def narrow_possibilities(game_board, origin_y, origin_x)
   check_box(game_board, origin_y, origin_x)
 end
 
-
 # Deletes possibilities from cell if a number is in the same row
       # by checking vertical and horizontal
 def check_row(game_board, origin_y, origin_x )
@@ -61,7 +91,9 @@ def check_row(game_board, origin_y, origin_x )
   # Cycling through each cell in given row
   game_board[origin_y].each_index do |x|
     # If cell has one possibility...
-    if game_board[origin_y][x].length == 1
+    if x == origin_x
+
+    elsif game_board[origin_y][x].length == 1
       # Delete this possibility from origin
       game_board[origin_y][origin_x].delete!(game_board[origin_y][x])
     end
@@ -78,6 +110,7 @@ end
 def check_box(game_board, origin_y, origin_x)
   # If origin-y and origin-x meet a certain condition...
         # Iterate through a specific box
+
   if (0..2).include?(origin_y) && (0..2).include?(origin_x)
     loop_box(game_board, origin_y, origin_x, (0..2), (0..2))
   elsif (0..2).include?(origin_y) && (3..5).include?(origin_x)
@@ -103,14 +136,14 @@ end
 def loop_box(game_board, origin_y, origin_x, range_y, range_x)
   range_y.each do |y|
     range_x.each do |x|
-      if game_board[y][x].length == 1
+      if y == origin_y && x == origin_x
+
+      elsif game_board[y][x].length == 1
         # Delete this possibility from origin
         game_board[origin_y][origin_x].delete!(game_board[y][x])
       end
     end
   end
 end
-
-
 
 

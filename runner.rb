@@ -13,11 +13,12 @@ require_relative 'sudoku'
 # so we call String#chomp to remove them.
 
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
-
+populate_board(board_string)
 solved_board = solve(board_string)
+
 if solved?(solved_board)
   puts "The board was solved!"
-  puts pretty_board(solved_board)
+  # puts pretty_board(solved_board)
 else
   puts "The board wasn't solved :("
 end
