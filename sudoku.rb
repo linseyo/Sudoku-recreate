@@ -8,7 +8,10 @@ def solve(board_string)
   range = (0..8)
   count = 0
   loop do
+    old_board = game_board
     check = true
+    used_guess = false
+    break if used_guess
     range.each do |y|
       range.each do |x|
         narrow_possibilities(game_board, y, x)
@@ -19,9 +22,21 @@ def solve(board_string)
         nil
       end
     end
+    new_board = game_board
+    if old_board == new_board
+      range.each do |guess_y|
+        row_loop_count = 0
+        range.each do |guess_x|
+          break if guess_possibilities(game_board, guess_y, guess_x)
+          row_loop_count += 1
+        end
+        break if row_loop_count < 9
+      end
+      used_guess = true
+    end
     break if check == true
     count += 1
-    break if count > 50
+    break if count > 5
   end
   game_board
 end
@@ -101,6 +116,15 @@ def narrow_possibilities(game_board, origin_y, origin_x)
   check_box(game_board, origin_y, origin_x)
 end
 
+def guess_possibilities(game_board, origin_y, origin_x)
+  return guess_row(game_board, origin_y, origin_x)
+  flipped_game_board = flip_game_board(game_board)
+  # Flip origin x and y in parameters because game_board is flipped
+  return guess_row(flipped_game_board, origin_x, origin_y)
+  # Check relevant box for numbers already there
+  return guess_box(game_board, origin_y, origin_x)
+end
+
 # Deletes possibilities from cell if a number is in the same row
       # by checking vertical and horizontal
 def check_row(game_board, origin_y, origin_x )
@@ -113,6 +137,23 @@ def check_row(game_board, origin_y, origin_x )
     elsif game_board[origin_y][x].length == 1
       # Delete this possibility from origin
       game_board[origin_y][origin_x].delete!(game_board[origin_y][x])
+    end
+  end
+end
+
+def guess_row(game_board, origin_y, origin_x )
+  # Origin x and y correspond to cell that we are searching from
+  # Cycling through each cell in given row
+  game_board[origin_y].each_index do |x|
+    # If cell has one possibility...
+    if x == origin_x
+
+    elsif game_board[origin_y][x] == game_board[origin_y][origin_x]
+      if game_board[origin_y][origin_x].length == 2 && game_board[origin_y][x] == 2
+        # Delete this possibility from origin
+        game_board[origin_y][origin_x].delete!(game_board[origin_y][x][0])
+        return true
+      end
     end
   end
 end
@@ -149,6 +190,31 @@ def check_box(game_board, origin_y, origin_x)
   end
 end
 
+def guess_box(game_board, origin_y, origin_x)
+  # If origin-y and origin-x meet a certain condition...
+        # Iterate through a specific box
+
+  if (0..2).include?(origin_y) && (0..2).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (0..2), (0..2))
+  elsif (0..2).include?(origin_y) && (3..5).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (0..2), (3..5))
+  elsif (0..2).include?(origin_y) && (6..8).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (0..2), (6..8))
+  elsif (3..5).include?(origin_y) && (0..2).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (3..5), (0..2))
+  elsif (3..5).include?(origin_y) && (3..5).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (3..5), (3..5))
+  elsif (3..5).include?(origin_y) && (6..8).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (3..5), (6..8))
+  elsif (6..8).include?(origin_y) && (0..2).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (6..8), (0..2))
+  elsif (6..8).include?(origin_y) && (3..5).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (6..8), (3..5))
+  elsif (6..8).include?(origin_y) && (6..8).include?(origin_x)
+    return loop_guess_box(game_board, origin_y, origin_x, (6..8), (6..8))
+  end
+end
+
 # Loops through each cell in box and removes possibility
 def loop_box(game_board, origin_y, origin_x, range_y, range_x)
   range_y.each do |y|
@@ -158,6 +224,22 @@ def loop_box(game_board, origin_y, origin_x, range_y, range_x)
       elsif game_board[y][x].length == 1
         # Delete this possibility from origin
         game_board[origin_y][origin_x].delete!(game_board[y][x])
+      end
+    end
+  end
+end
+
+def loop_guess_box(game_board, origin_y, origin_x, range_y, range_x)
+  range_y.each do |y|
+    range_x.each do |x|
+      if y == origin_y && x == origin_x
+
+      elsif game_board[origin_y][x] == game_board[origin_y][origin_x]
+        if game_board[origin_y][origin_x].length == 2
+          # Delete this possibility from origin
+          game_board[origin_y][origin_x].delete!(game_board[origin_y][x][0])
+          return true
+        end
       end
     end
   end
