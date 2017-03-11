@@ -147,7 +147,7 @@ end
 def solve(board_string)
   formatted_board = format_board(board_string)
   until solved?(formatted_board)
-    p cell_checker(reduce_possibilities_rotation(formatted_board))
+    cell_checker(reduce_possibilities_rotation(formatted_board))
   end
   formatted_board
 end
@@ -166,10 +166,20 @@ end
 # for output to the screen. No `puts` here!
 # The input board will be in whatever
 # form `solve` returns.
-def pretty_board(board)
+
+def prettys_rows(row)
+  row.join("  ")
 end
 
-easy_board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
-board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
+def pretty_board(board) # output is nice string to be putsed in runner
+  pretty_print = ""
+  board.each do |row|
+    pretty_print += (prettys_rows(row) + "\n")
+  end
+  pretty_print
+end
 
-solve(easy_board_string)
+# easy_board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
+# board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
+
+# solve(easy_board_string)
