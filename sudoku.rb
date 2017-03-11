@@ -166,15 +166,23 @@ def cell_checker(board)
   end
 end
 
+def empty_puzzle(board_string)
+  if board_string == "---------------------------------------------------------------------------------"
+    board_string = "123456789456789123789123456234567891567891234891234567345678912912345678678912345"
+  end
+  board_string
+end
+
 # Takes a board as a string in the format
 # you see in the puzzle file. Returns
 # something representing a board after
 # your solver has tried to solve it.
 # How you represent your board is up to you!
 def solve(board_string)
+  board_string = empty_puzzle(board_string)
   formatted_board = format_board(board_string)
   until solved?(formatted_board)
-    p cell_checker(reduce_possibilities_rotation(formatted_board))
+    cell_checker(reduce_possibilities_rotation(formatted_board))
   end
   formatted_board
 end
@@ -193,10 +201,15 @@ end
 # for output to the screen. No `puts` here!
 # The input board will be in whatever
 # form `solve` returns.
-def pretty_board(board)
+
+def prettys_rows(row)
+  row.join("  ")
 end
 
-easy_board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
-board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
-
-solve(easy_board_string)
+def pretty_board(board) # output is nice string to be putsed in runner
+  pretty_print = ""
+  board.each do |row|
+    pretty_print += (prettys_rows(row) + "\n")
+  end
+  pretty_print
+end

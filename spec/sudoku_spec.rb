@@ -159,4 +159,15 @@ describe "Sudoku" do
       ]
     end
   end
+
+  context 'prints pretty board' do
+    it 'returns a pretty row' do
+      expect(prettys_rows(["1", "2", "3", "4", "5", "6", "7", "8", "9"])).to eq "1  2  3  4  5  6  7  8  9"
+    end
+
+    it 'prints an entire board nicely' do
+      expect(pretty_board(solve(test_board_string))).to eq "1  4  5  8  9  2  6  7  3\n8  9  3  1  7  6  4  2  5\n2  7  6  4  3  5  8  1  9\n5  1  9  2  4  7  3  8  6\n7  6  2  5  8  3  1  9  4\n3  8  4  9  6  1  7  5  2\n9  5  7  6  1  4  2  3  8\n4  3  8  7  2  9  5  6  1\n6  2  1  3  5  8  9  4  7\n"
+    end
+  end
+
 end
