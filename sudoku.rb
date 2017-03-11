@@ -6,28 +6,33 @@
 
 # INPUT: String
 # OUTPUT: String
-mega_array = []
-def solve(mega_array, board_string) # Delete mega array from parameter ***
 
+def solve(board_string)
+  board_array = []
   separated_board_string = board_string.split('')
-  mega_array << (separated_board_string[0..8])
-  mega_array << (separated_board_string[9..17])
-  mega_array << (separated_board_string[18..26])
-  mega_array << (separated_board_string[27..35])
-  mega_array << (separated_board_string[36..44])
-  mega_array << (separated_board_string[45..53])
-  mega_array << (separated_board_string[54..62])
-  mega_array << (separated_board_string[63..71])
-  mega_array << (separated_board_string[72..80])
-  mega_array
-end
+  board_array << (separated_board_string[0..8])
+  board_array << (separated_board_string[9..17])
+  board_array << (separated_board_string[18..26])
+  board_array << (separated_board_string[27..35])
+  board_array << (separated_board_string[36..44])
+  board_array << (separated_board_string[45..53])
+  board_array << (separated_board_string[54..62])
+  board_array << (separated_board_string[63..71])
+  board_array << (separated_board_string[72..80])
+  board_array
 
+#   temp_array = board_array.join
+# 81.times do
+   sudoku_solver(board_array)
+# end
+  p board_array
+end
 # Returns a boolean indicating whether
 # or not the provided board is solved.
 # The input board will be in whatever
 # form `solve` returns.
 def solved?(board)
-  if board.match(/\D/)
+  if board.join.match(/\D/)
     false
   else
     true
@@ -178,8 +183,8 @@ def box(mega_array, rposition, cposition)
 end
 
 # p box(mega_array, 3,6)
-p sudoku_solver(mega_array)
-pretty_board(solve(mega_array, "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
+
+sudoku_solver(solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
 
 
 # pseudocode
