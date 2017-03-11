@@ -6,21 +6,10 @@
 
 # INPUT: String
 # OUTPUT: String
-  mega_array = [] # FOR DRIVER CODE ***
+mega_array = []
 def solve(mega_array, board_string) # Delete mega array from parameter ***
-  separated_board_string = board_string.split('')
 
-  # counter = 0
-  #   while counter < 82
-  #     separated_board_string.each_with_index do |number, index|
-  #       index = 0
-  #       mega_array << number[index]
-  #       index += 1
-  #       # mega_array
-  #     end
-  #     counter += 9
-  #    p mega_array
-  #   end
+  separated_board_string = board_string.split('')
   mega_array << (separated_board_string[0..8])
   mega_array << (separated_board_string[9..17])
   mega_array << (separated_board_string[18..26])
@@ -31,7 +20,6 @@ def solve(mega_array, board_string) # Delete mega array from parameter ***
   mega_array << (separated_board_string[63..71])
   mega_array << (separated_board_string[72..80])
   mega_array
-
 end
 
 # Returns a boolean indicating whether
@@ -39,6 +27,11 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def solved?(board)
+  if board.match(/\D/)
+    false
+  else
+    true
+  end
 end
 
 # Takes in a board in some form and
@@ -50,10 +43,8 @@ def pretty_board(board)
   board.each do |num|
     puts num.each { |chars| chars}.join(" ")
   end
+
 end
-
-pretty_board(solve(mega_array, "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
-
 
 def sudoku_solver(mega_array)
   mega_array.each_with_index do |row, rposition|
@@ -188,6 +179,8 @@ end
 
 # p box(mega_array, 3,6)
 p sudoku_solver(mega_array)
+pretty_board(solve(mega_array, "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
+
 
 # pseudocode
 # check horizontally, put the possible in the satchel
