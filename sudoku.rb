@@ -24,6 +24,25 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Narrows possibilities of a cell by checking horizontal, vertical,
       # and box values.
 def narrow_possibilities(board, origin_y, origin_x)
@@ -36,6 +55,7 @@ end
 
 
 # Deletes possibilities from cell if a number is in the same row
+      # Checks vertical and horizontal
 def check_row(board, origin_y, origin_x )
   # Origin x and y correspond to cell that we are searching from
   # Cycling through each cell in given row
@@ -51,6 +71,11 @@ end
 # Flips the board so rows are now columns...used to check columns.
 def flip_board(board)
   board.transpose
+end
+
+# Deletes possibilities from cell if a number is in the same row
+      # Checks box(3x3)
+def check_box(board, origin_y, origin_x)
 end
 
 
