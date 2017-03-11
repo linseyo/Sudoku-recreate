@@ -29,22 +29,25 @@ def cell_solved?(cell)
 end
 
 #need to run each_with_index when this is called
-#ref cell is the top left cell in box
-def define_coordinates(row_index, col_index)
-  ref_row_index = (row_index / 3) * 3
-  ref_col_index = (col_index / 3) * 3
+def define_box_coords(row_index, col_index)
+  ref_row_index = (define_ref_index(row_index))
+  ref_col_index = (define_ref_index(col_index))
   box_coords = []
   3.times do |row_adjust|
     row_coord = ref_row_index + row_adjust
-    j = 0
     3.times do |col_adjust|
-      coordinate = []
+      cell_coord = []
       col_coord = ref_col_index + col_adjust
-      coordinate << row_coord << col_coord
-      box_coords << coordinate
+      cell_coord << row_coord << col_coord
+      box_coords << cell_coord
     end
   end
   box_coords
+end
+
+# ref_index refers index of top left cell in box
+def define_ref_index(input_index)
+  ref_index = ( input_index / 3) * 3
 end
 
 def update_board(coordinate_array, board)

@@ -1,41 +1,31 @@
 require_relative '../sudoku'
 
 describe "Sudoku" do
-  let(:test_board) {"1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"}
+  let(:test_board_string) {"1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"}
   let(:top_left_box_coords) { [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]] }
   let(:bot_mid_box_coords) { [[6, 3], [6, 4], [6, 5], [7, 3], [7, 4], [7, 5], [8, 3], [8, 4], [8, 5]] }
+  let(:test_board_to_rows) { ["1-58-2---",\
+                              "-9--764-5",\
+                              "2--4--819",\
+                              "-19--73-6",\
+                              "762-83-9-",\
+                              "----61-5-",\
+                              "--76---3-",\
+                              "43--2-5-1",\
+                              "6--3-89--"] }
+  let(:test_board_cells) { [\
+                              ["1", "-", "5", "8", "-", "2", "-", "-", "-"], \
+                              ["-", "9", "-", "-", "7", "6", "4", "-", "5"], \
+                              ["2", "-", "-", "4", "-", "-", "8", "1", "9"], \
+                              ["-", "1", "9", "-", "-", "7", "3", "-", "6"], \
+                              ["7", "6", "2", "-", "8", "3", "-", "9", "-"], \
+                              ["-", "-", "-", "-", "6", "1", "-", "5", "-"], \
+                              ["-", "-", "7", "6", "-", "-", "-", "3", "-"], \
+                              ["4", "3", "-", "-", "2", "-", "5", "-", "1"], \
+                              ["6", "-", "-", "3", "-", "8", "9", "-", "-"] \
+                            ] }
 
-  it 'splits string into rows' do
-    expect(format_rows(test_board)).to eq \
-    ["1-58-2---",\
-      "-9--764-5",\
-      "2--4--819",\
-      "-19--73-6",\
-      "762-83-9-",\
-      "----61-5-",\
-      "--76---3-",\
-      "43--2-5-1",\
-      "6--3-89--"]
-  end
-
-  it 'splits each string within rows array to its own array' do
-    expect(format_columns(format_rows(test_board))).to eq \
-    [\
-    ["1", "-", "5", "8", "-", "2", "-", "-", "-"], \
-    ["-", "9", "-", "-", "7", "6", "4", "-", "5"], \
-    ["2", "-", "-", "4", "-", "-", "8", "1", "9"], \
-    ["-", "1", "9", "-", "-", "7", "3", "-", "6"], \
-    ["7", "6", "2", "-", "8", "3", "-", "9", "-"], \
-    ["-", "-", "-", "-", "6", "1", "-", "5", "-"], \
-    ["-", "-", "7", "6", "-", "-", "-", "3", "-"], \
-    ["4", "3", "-", "-", "2", "-", "5", "-", "1"], \
-    ["6", "-", "-", "3", "-", "8", "9", "-", "-"] \
-  ]
-  end
-
-  it 'it formats string into a board to be solved' do
-    expect(format_board(test_board)).to eq \
-    [\
+  let(:test_board_all_possiblities) { [\
       ["1", "123456789", "5", "8", "123456789", "2", "123456789", "123456789", "123456789"], \
       ["123456789", "9", "123456789", "123456789", "7", "6", "4", "123456789", "5"], \
       ["2", "123456789", "123456789", "4", "123456789", "123456789", "8", "1", "9"], \
@@ -45,15 +35,31 @@ describe "Sudoku" do
       ["123456789", "123456789", "7", "6", "123456789", "123456789", "123456789", "3", "123456789"], \
       ["4", "3", "123456789", "123456789", "2", "123456789", "5", "123456789", "1"], \
       ["6", "123456789", "123456789", "3", "123456789", "8", "9", "123456789", "123456789"] \
-    ]
+    ] }
+
+
+
+  it 'splits string into rows' do
+    expect(format_rows(test_board_string)).to eq test_board_to_rows
+
   end
 
-  it 'defines coordinate array correctly' do
-    expect(define_coordinates(8, 4)).to eq [[6, 3], [6, 4], [6, 5], [7, 3], [7, 4], [7, 5], [8, 3], [8, 4], [8, 5]]
+  it 'splits each string within rows array to its own array' do
+    expect(format_columns(format_rows(test_board_string))).to eq test_board_cells
+
+  end
+
+  it 'it formats string into a board to be solved' do
+    expect(format_board(test_board_string)).to eq test_board_all_possiblities
+
+  end
+
+  it 'defines coordinate array correctly in bottom middle box' do
+    expect(define_box_coords(8, 4)).to eq bot_mid_box_coords
   end
 
   it 'removes found values in unsolved cells from the top left box' do
-    expect(update_board(top_left_box_coords, format_board(test_board))).to eq \
+    expect(update_board(top_left_box_coords, test_board_all_possiblities)).to eq \
     [\
       ["1", "34678", "5", "8", "123456789", "2", "123456789", "123456789", "123456789"], \
       ["34678", "9", "34678", "123456789", "7", "6", "4", "123456789", "5"], \
@@ -67,7 +73,7 @@ describe "Sudoku" do
     ]
   end
   it 'removes found values in unsolved cells from the bottom middle box' do
-    expect(update_board(bot_mid_box_coords, format_board(test_board))).to eq \
+    expect(update_board(bot_mid_box_coords, test_board_all_possiblities)).to eq \
     [\
       ["1", "123456789", "5", "8", "123456789", "2", "123456789", "123456789", "123456789"], \
       ["123456789", "9", "123456789", "123456789", "7", "6", "4", "123456789", "5"], \
@@ -79,6 +85,10 @@ describe "Sudoku" do
       ["4", "3", "123456789", "14579", "2", "14579", "5", "123456789", "1"], \
       ["6", "123456789", "123456789", "3", "14579", "8", "9", "123456789", "123456789"] \
     ]
+  end
+
+  it 'defines coordinate array correctly for top left box' do
+    expect(define_box_coords(1, 2)).to eq top_left_box_coords
   end
 
 end
