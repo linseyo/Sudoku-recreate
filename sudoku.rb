@@ -161,6 +161,19 @@ def solved?(board)
   false
 end
 
+# still working, currently doesnt work
+# def compare_iteration(board)
+#   next_iteration = cell_checker(reduce_possibilities_rotation(board))
+#   if board == next_iteration
+#     next_iteration.each do |row|
+#       if row.uniq.length < row.length
+#         row.each do |col|
+# end
+
+
+#   end
+# end
+
 # Takes in a board in some form and
 # returns a _String_ that's well formatted
 # for output to the screen. No `puts` here!
@@ -169,7 +182,7 @@ end
 def pretty_board(board)
 end
 
-easy_board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
+easy_board_string = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
 board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
 
 solve(easy_board_string)
