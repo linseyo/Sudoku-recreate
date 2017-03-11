@@ -8,11 +8,13 @@ describe "Sudoku" do
     it 'returns false when board contains non-integer numbers' do
       expect(solved?(board)).to eq false
     end
-  end
     it 'returns true when board contains only integers' do
       expect(solved?(board2)).to eq true
     end
-
-
+  end
+  context 'builds nested arrays'
+  it 'returns nested arrays' do
+    expect
+  end
 
 end
