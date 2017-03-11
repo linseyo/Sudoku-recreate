@@ -6,10 +6,10 @@
 
 # INPUT: String
 # OUTPUT: String
-mega_array = []
-def solve(mega_array, board_string)
+  mega_array = [] # FOR DRIVER CODE ***
+def solve(mega_array, board_string) # Delete mega array from parameter ***
   separated_board_string = board_string.split('')
-  # mega_array = []
+
   # counter = 0
   #   while counter < 82
   #     separated_board_string.each_with_index do |number, index|
@@ -47,16 +47,19 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def pretty_board(board)
+  board.each do |num|
+    puts num.each { |chars| chars}.join(" ")
+  end
 end
 
-solve(mega_array, "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
+pretty_board(solve(mega_array, "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"))
 
 
-def method ()
+def sudoku_solver(mega_array)
   mega_array.each_with_index do |row, rposition|
     row.each_with_index do |cell, cposition|
       if dash_finder(cell)
-        check_arrays(cell, rposition, cposition)
+        mega_array[rposition][cposition] = check_arrays(mega_array, cell, rposition, cposition)
         # then do the check on the row
         # do the column check
         # do the box check
@@ -65,21 +68,52 @@ def method ()
   end
 end
 
-def check_arrays(cell, rposition, cposition)
-array.each {|value| (1..9).each do
-value == number}
+def check_arrays(mega_array, cell, rposition, cposition)
+numbers = ["1", "2" ,"3", "4" , "5", "6", "7", "8", "9"]
+satchel = []
+  numbers.each do |digit|
+    if horizontal(mega_array, rposition).include?(digit) == false
+      satchel << digit
+    end
+  end
+
+  until satchel.length == 1
+     satchel.each do |satchel_digit|
+       if vertical(mega_array, cposition).include?(satchel_digit)
+        satchel.delete(satchel_digit)
+      end
+     end
+
+
+
+    satchel.each do |next_digit|
+     if box(mega_array, rposition, cposition).include?(next_digit)
+       satchel.delete(next_digit)
+     end
+   end
+
+    if satchel.length == 1
+      return satchel[0]
+    else
+      return "-"
+    end
 end
+end
+# end
+# array.each {|value| (1..9).each do
+# value == number}
 
 def dash_finder(cell)
   cell.include?("-")
 end
 
-def horizontal(rposition)
+def horizontal(mega_array, rposition)
   mega_array[rposition]
 end
 
-def vertical(cposition)
-  mega_array.transpose[cposition]
+def vertical(mega_array, cposition)
+  temparray = mega_array.transpose
+  temparray[cposition]
 end
 
 def box(mega_array, rposition, cposition)
@@ -149,10 +183,11 @@ def box(mega_array, rposition, cposition)
       end
     end
   end
-  box
+   box
 end
 
-p box(mega_array, 3,6)
+# p box(mega_array, 3,6)
+p sudoku_solver(mega_array)
 
 # pseudocode
 # check horizontally, put the possible in the satchel
