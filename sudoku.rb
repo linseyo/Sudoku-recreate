@@ -9,17 +9,6 @@
 def solve(board_string)
   separated_board_string = board_string.split('')
   mega_array = []
-  # counter = 0
-  #   while counter < 82
-  #     separated_board_string.each_with_index do |number, index|
-  #       index = 0
-  #       mega_array << number[index]
-  #       index += 1
-  #       # mega_array
-  #     end
-  #     counter += 9
-  #    p mega_array
-  #   end
   mega_array << (separated_board_string[0..8])
   mega_array << (separated_board_string[9..17])
   mega_array << (separated_board_string[18..26])
@@ -30,7 +19,6 @@ def solve(board_string)
   mega_array << (separated_board_string[63..71])
   mega_array << (separated_board_string[72..80])
   mega_array
-
 end
 
 # Returns a boolean indicating whether
@@ -46,8 +34,17 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def pretty_board(board)
+  # INPUT: Array
+  # OUTPUT: String
+
+  # mega_string = board.join('')
+
+  board.each do |num|
+    puts num.each { |chars| chars}.join(" ")
+  end
+
 end
 
-
-p solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
-
+# solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
+pretty_board(solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
+)
