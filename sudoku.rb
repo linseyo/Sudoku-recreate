@@ -49,7 +49,8 @@ def narrow_possibilities(game_board, origin_y, origin_x)
   flipped_game_board = flip_game_board(game_board)
   # Flip origin x and y in parameters because game_board is flipped
   check_row(flipped_game_board, origin_x, origin_y)
-# IN PROGRESS
+  # Check relevant box for numbers already there
+  check_box(game_board, origin_y, origin_x)
 end
 
 
