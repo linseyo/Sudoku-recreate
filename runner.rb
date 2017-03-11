@@ -14,6 +14,8 @@ require_relative 'sudoku'
 
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
+puts pretty_board(populate_board(board_string))
+
 solved_board = solve(board_string)
 if solved?(solved_board)
   puts "The board was solved!"
