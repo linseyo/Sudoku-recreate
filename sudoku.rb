@@ -37,6 +37,11 @@ def cell_solved?(cell)
   false
 end
 
+def row_cell_solved?(row)
+
+end
+
+# Reduce possibilities:
 def reduce_possibilities(row)
   already_solved = solved_cells(row)
   row.each do |cell|
@@ -55,6 +60,26 @@ def reduce_possibilities_rows(board)
   end
   board
 end
+
+def reduce_possibilities_cols(board)
+  rotated_board = board.transpose
+  reduce_possibilities_rows(rotated_board)
+end
+
+def reduce_possibilities_rotation(board)
+  unrotated_board = reduce_possibilities_rows(board)
+  rotated = reduce_possibilities_cols(unrotated_board)
+  i = 0
+  while i < 100
+    rotated.replace(reduce_possibilities_cols(rotated))
+    p rotated
+    puts
+    puts
+    i += 1
+  end
+  rotated
+end
+
 # Takes a board as a string in the format
 # you see in the puzzle file. Returns
 # something representing a board after
@@ -78,5 +103,14 @@ end
 def pretty_board(board)
 end
 
-# test_board = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
-# reduce_possibilities_rows(format_board(test_board))
+ test_board = "-8--2-----4-5--32--2-3-9-466---9---4---64-5-1134-5-7--36---4--24-723-6-----7--45-"
+
+ solvable_board = format_board(test_board)
+ p solvable_board
+puts "---------------"
+puts
+p test_solution = reduce_possibilities_rotation(solvable_board)
+ # solved_rows = reduce_possibilities_rows(solvable_board)
+ # p solved_rows
+ # x_and_y_solved_puzzle = reduce_possibilities_cols(solved_rows)
+ # p x_and_y_solved_puzzle
