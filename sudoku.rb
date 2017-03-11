@@ -44,4 +44,3 @@ def pretty_board(board)
   end
 
 end
-
