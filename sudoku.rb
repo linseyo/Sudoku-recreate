@@ -28,9 +28,10 @@ end
       # and box values.
 def narrow_possibilities(board, origin_y, origin_x)
   check_row(board, origin_y, origin_x)
-  flipped_board = flip_game_board()
-  check_row(flipped_board, origin_y, origin_x)
-
+  flipped_board = flip_board(board)
+  # Flip origin x and y in parameters because board is flipped
+  check_row(flipped_board, origin_x, origin_y)
+# IN PROGRESS
 end
 
 

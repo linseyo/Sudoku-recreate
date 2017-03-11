@@ -13,6 +13,12 @@ describe "Sudoku" do
       test_board = [["1", "2", "3"], ["4", "5", "6"]]
       expect(flip_board(test_board)).to eq [["1", "4"], ["2", "5"], ["3", "6"]]
     end
+
+    it 'Narrows possibilities horizontally and vertically' do
+      test_board = [["1237", "235689", "3"], ["43", "5", "6345"], ["7", "8", "9"]]
+      narrow_possibilities(test_board, 0, 1)
+      expect(test_board[0][1]).to eq "269"
+    end
   end
 
 
