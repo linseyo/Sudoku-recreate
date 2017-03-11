@@ -1,5 +1,13 @@
+# Initial unsolved board:
 def format_board(board_string)
   convert_dash(format_columns(format_rows(board_string)))
+end
+
+def format_solution(board)
+  board.each do |row|
+    row.join('')
+  end
+  board.join('')
 end
 
 def format_rows(board_string)
@@ -87,7 +95,6 @@ def row_cell_solved?(row)
 
 end
 
-# Reduce possibilities:
 def reduce_possibilities(row)
   already_solved = solved_cells(row)
   row.each do |cell|
@@ -118,12 +125,18 @@ def reduce_possibilities_rotation(board)
   i = 0
   while i < 100
     rotated.replace(reduce_possibilities_cols(rotated))
-    p rotated
-    puts
-    puts
     i += 1
   end
   rotated
+end
+
+def cell_checker(board)
+  board.each_with_index do |row, row_index|
+    row.each_with_index do |col, col_index|
+      box_coords = define_box_coords(row_index, col_index)
+      update_board(box_coords, board)
+    end
+  end
 end
 
 # Takes a board as a string in the format
@@ -132,6 +145,11 @@ end
 # your solver has tried to solve it.
 # How you represent your board is up to you!
 def solve(board_string)
+  formatted_board = format_board(board_string)
+  until solved?(formatted_board)
+    p cell_checker(reduce_possibilities_rotation(formatted_board))
+  end
+  formatted_board
 end
 
 # Returns a boolean indicating whether
@@ -139,6 +157,8 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def solved?(board)
+  return true if format_solution(board).length == 81
+  false
 end
 
 # Takes in a board in some form and
@@ -149,14 +169,7 @@ end
 def pretty_board(board)
 end
 
- test_board = "-8--2-----4-5--32--2-3-9-466---9---4---64-5-1134-5-7--36---4--24-723-6-----7--45-"
+easy_board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
+board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
 
- solvable_board = format_board(test_board)
- p solvable_board
-puts "---------------"
-puts
-p test_solution = reduce_possibilities_rotation(solvable_board)
- # solved_rows = reduce_possibilities_rows(solvable_board)
- # p solved_rows
- # x_and_y_solved_puzzle = reduce_possibilities_cols(solved_rows)
- # p x_and_y_solved_puzzle
+solve(easy_board_string)
