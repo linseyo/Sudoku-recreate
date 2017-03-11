@@ -14,9 +14,11 @@ require_relative 'sudoku'
 
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
-puts pretty_board(populate_board(board_string))
-
+unsolved_board = populate_board(board_string)
 solved_board = solve(board_string)
+
+puts pretty_board(unsolved_board)
+
 if solved?(solved_board)
   puts "The board was solved!"
   puts pretty_board(solved_board)
