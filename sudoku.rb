@@ -6,8 +6,8 @@
 def solve(board_string)
   sudoku_board = splitter(board_string)
   sudoku_board_hashes = hash_creater(sudoku_board)
-  puts "IiiiiiiiiiiiI"
-  puts sudoku_board_hashes
+  hash_filler(sudoku_board, sudoku_board_hashes)
+   puts sudoku_board_hashes
   solved?(sudoku_board)
   pretty_board(board_string)
 end
@@ -31,9 +31,55 @@ def hash_creater(board)
     arrary_to_return.push(box_name)
   }
   return arrary_to_return
-
 end
 
+def hash_filler(game_board, hash_to_fill)
+  hash_to_fill.each_with_index do |current_box, position|
+    current_box = combine_case(current_box, game_board, position)
+  end
+end
+
+def combine_case(box, game_board, switch)
+  row_value = 0
+  if switch > 5
+    row_value = 6
+  elsif switch > 2 && switch <= 5
+    row_value = 3
+  else row_value = 0
+  end
+  case switch
+    when 0,3,6
+      box["0"] = game_board[row_value][0]
+      box["1"] = game_board[row_value][1]
+      box["2"] = game_board[row_value ][2]
+      box["3"] = game_board[(row_value +1)][0]
+      box["4"] = game_board[(row_value +1)][1]
+      box["5"] = game_board[(row_value +1)][2]
+      box["6"] = game_board[row_value + 2][0]
+      box["7"] = game_board[row_value + 2][1]
+      box["8"] = game_board[row_value + 2][2]
+    when 1,4,7
+      box["0"] = game_board[row_value][3]
+      box["1"] = game_board[row_value][4]
+      box["2"] = game_board[row_value][5]
+      box["3"] = game_board[row_value+1][3]
+      box["4"] = game_board[row_value+1][4]
+      box["5"] = game_board[row_value+1][5]
+      box["6"] = game_board[(row_value+2)][3]
+      box["7"] = game_board[row_value+2][4]
+      box["8"] = game_board[row_value+2][5]
+    when 2,5,8
+      box["0"] = game_board[row_value][6]
+      box["1"] = game_board[row_value][7]
+      box["2"] = game_board[row_value][8]
+      box["3"] = game_board[row_value +1][6]
+      box["4"] = game_board[row_value +1][7]
+      box["5"] = game_board[row_value +1][8]
+      box["6"] = game_board[row_value + 2][6]
+      box["7"] = game_board[row_value + 2][7]
+      box["8"] = game_board[row_value + 2][8]
+    end
+end
 # Returns a boolean indicating whether
 # or not the provided board is solved.
 # The input board will be in whatever
@@ -130,7 +176,7 @@ def splitter(board_string)
 end
 
 
-test = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
+test = "--5-3--819-285--6-6----4-5---74-283-34976---5--83--49-15--87--2-9----6---26-495-3"
 test_array = solve(test)
 puts test_array
 
