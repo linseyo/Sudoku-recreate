@@ -26,6 +26,11 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def solved?(board)
+  if board.match(/\D/)
+    false
+  else
+    true
+  end
 end
 
 # Takes in a board in some form and
@@ -34,17 +39,14 @@ end
 # The input board will be in whatever
 # form `solve` returns.
 def pretty_board(board)
-  # INPUT: Array
-  # OUTPUT: String
-
-  # mega_string = board.join('')
-
   board.each do |num|
     puts num.each { |chars| chars}.join(" ")
   end
 
 end
 
-# solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
-pretty_board(solve("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
-)
+
+
+p solved?("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
+
+
